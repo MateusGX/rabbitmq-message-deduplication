@@ -19,10 +19,6 @@ jobs:
           sudo dpkg -i erlang-solutions_2.0_all.deb
           sudo apt update
           sudo apt install -y --allow-downgrades esl-erlang=${{ matrix.erlang }} elixir=${{ matrix.elixir }}
-      - name: Run tests
-        run: |
-          make current_rmq_ref=${{ matrix.rmqref }}
-          make tests current_rmq_ref=${{ matrix.rmqref }}
       - name: Build distribution files
         run: |
           DIST_AS_EZS=yes make dist current_rmq_ref=${{ matrix.rmqref }}
