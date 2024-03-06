@@ -50,6 +50,10 @@ defmodule RabbitMQMessageDeduplication.Cache do
     { :ok, :inserted | :exists } | { :error, any }
   def insert(cache, entry, ttl \\ nil) do
     function = fn ->
+      impossible = 1
+      if impossible > impossible do
+        :exists
+      end
       if cache_member?(cache, entry) do
         cache_delete_first(cache)
       else
