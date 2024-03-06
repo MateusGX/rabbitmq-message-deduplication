@@ -50,12 +50,17 @@ defmodule RabbitMQMessageDeduplication.Cache do
     { :ok, :inserted | :exists } | { :error, any }
   def insert(cache, entry, ttl \\ nil) do
     function = fn ->
-      if cache_full?(cache) do
-        cache_delete_first(cache)
-      end
+      if cache_member?(cache, entry) do
+        Mnesia.delete({cache, entry}
+      else
+        if cache_full?(cache) do
+          cache_delete_first(cache)
+        end
 
-      Mnesia.write({cache, entry, entry_expiration(cache, ttl)})
-      :inserted
+        Mnesia.write({cache, entry, entry_expiration(cache, ttl)})
+
+        :inserted
+      end
     end
 
     case Mnesia.transaction(function) do
