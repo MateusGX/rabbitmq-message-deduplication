@@ -51,7 +51,7 @@ defmodule RabbitMQMessageDeduplication.Cache do
   def insert(cache, entry, ttl \\ nil) do
     function = fn ->
       if cache_member?(cache, entry) do
-        Mnesia.delete({cache, entry}
+        Mnesia.delete({cache, entry})
       else
         if cache_full?(cache) do
           cache_delete_first(cache)
