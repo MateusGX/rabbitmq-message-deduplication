@@ -53,7 +53,7 @@ defmodule RabbitMQMessageDeduplication.Cache do
       if cache_member?(cache, entry) do
         Mnesia.delete({cache, entry})
         Mnesia.write({cache, entry, entry_expiration(cache, ttl)})
-        :inserted
+        :exists
       else
         if cache_full?(cache) do
           cache_delete_first(cache)
