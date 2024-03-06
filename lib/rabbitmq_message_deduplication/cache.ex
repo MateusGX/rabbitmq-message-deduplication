@@ -52,8 +52,6 @@ defmodule RabbitMQMessageDeduplication.Cache do
     function = fn ->
       if cache_member?(cache, entry) do
         cache_delete_first(cache)
-        Mnesia.write({cache, entry, entry_expiration(cache, ttl)})
-        :exists
       else
         if cache_full?(cache) do
           cache_delete_first(cache)
